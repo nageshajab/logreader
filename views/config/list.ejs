@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head'); %>
+  <script src="javascripts/config.js"></script>
+</head>
+
+<body class="container-fluid p-2 pl-1 pr-1">
+
+  <header>
+    <%- include('../partials/header'); %>
+  </header>
+
+  <!-- Button trigger modal -->
+  <button type="button" id="btnCreateConfig" class="btn btn-primary" data-bs-toggle="modal"
+    data-bs-target="#createEditModal">
+    Launch demo modal
+  </button>
+  <%- include('./createconfig'); %>
+  <%- include('./deleteConfig'); %>
+  <br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col" class="d-none">#</th>
+        <th scope="col">Host</th>
+        <th scope="col">ServiceName</th>
+        <th scope="col">Logfile</th>
+        <th scope="col">ReadUpto</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if(data.length){
+ 
+  for(var i = 0; i< data.length; i++) {%>
+      <tr>
+        <th scope="row" class="d-none"><%= data[i]._id %></th>
+        <td><%= data[i].host %></td>
+        <td><%= data[i].servicename %></td>
+        <td><%= data[i].logfile %></td>
+        <td><%=  data[i].ReadUpto %></td>
+        <td>
+          <button type="button" data-id="<%= data[i]._id %>" name="btnEditConfig" class="btn btn-primary openEditConfigDialog"
+            data-bs-toggle="modal" data-bs-target="#createEditModal">
+            Edit
+          </button>
+          <button type="button" data-id="<%= data[i]._id %>" name="btnDeleteConfig" class="btn btn-primary openDeleteConfigDialog"
+            data-bs-toggle="modal" data-bs-target="#deleteModal">
+            Delete
+          </button>
+        </td>
+      </tr>
+      <% }
+           
+   }else{ %>
+      <tr>
+        <td colspan="3">No user</td>
+      </tr>
+      <% } %>
+
+    </tbody>
+  </table>
+
+  <footer>
+    <%- include('../partials/footer'); %>
+  </footer>
+
+</body>
+
+</html>

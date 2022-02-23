@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">ADI</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/log">Log</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/config">Config</a>
+    </li>
+  </ul>
+</nav>
+<% if(locals.message){ %>
+  <div class="alert alert-success" role="alert">
+      <strong>Well done!</strong> <%=message.success%>
+  </div>
+<% } %>
+
+<% if (messages.error) { %>
+<p style="color:red"><%- messages.error %></p>
+<% } %>
+
+<% if (messages.success) { %>
+<p class="alert alert-success mt-4"><%- messages.success %></p>
+<% } %>

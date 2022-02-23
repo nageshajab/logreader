@@ -1,0 +1,87 @@
+<!-- Modal -->
+<div class="modal fade" id="createEditModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <div class="modal-body">
+                <form name="form1" method="POST" action="/config/createOrUpdate">
+                    <table>
+                        <tr>
+                            <td>Id</td>
+                            <td> <input readonly type="text" name="id" id="bookId" value="" /></td>
+                        </tr>
+                        <tr>
+                            <td>Log Folder Path</td>
+                            <td><input type="text" name="logfile" autofocus></td>
+                        </tr>
+                        <tr>
+                            <td>ReadUpto</td>
+                            <td><input type="text" name="ReadUpto"></td>
+                        </tr>
+                        <tr>
+                            <td>host</td>
+                            <td><input type="text" name="host"></td>
+                        </tr>
+                        <tr>
+                            <td>servicename</td>
+                            <td><input type="text" name="servicename"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function clearform() {
+        $("[name='logfile']").val('');
+        $("[name='ReadUpto']").val('');
+        $("[name='host']").val('');
+        $(".modal-body #bookId").val('');
+        $("[name='servicename']").val('');
+    }
+    $(document).on("click", "#btnCreateConfig", function () {
+        clearform();
+    })
+    $('#createEditModal').on('shown.bs.modal', function () {
+        //console.log('modal showed');
+        $("[name='logfile']").focus();
+    })
+
+    $(document).keydown(function (e) {
+        if (e.altKey && e.keyCode == 67) {
+            console.log(e.keyCode);
+            $("#btnCreateConfig").click();
+        }
+    });
+    $(document).on("click", ".openEditConfigDialog", function () {
+        var Id = $(this).data('id');
+        $(".modal-body #bookId").val(Id);
+        console.log('inside openEditConfigDialog');
+        $.get(`/config/getbyId/${Id}`, function (data) {
+
+            $("[name='logfile']").val(data[0].logfile);
+            $("[name='ReadUpto']").val(data[0].ReadUpto);
+            $("[name='host']").val(data[0].host);
+            $("[name='servicename']").val(data[0].servicename);
+
+        //    alert("Data: " + JSON.stringify(data));
+        });
+    });
+</script>
